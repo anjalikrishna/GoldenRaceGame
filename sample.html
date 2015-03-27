@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="lib/raphael-with-fraphael.min.js"></script>
+    <title>Treasure-hunt</title>
+</head>
+<body>
+    <div id="paper1"></div>
+    <script type="text/javascript">
+        var paper = Raphael("paper1", 500,500);
+        var mainRect = paper.rect(0,0,500,500);//.attr({fill: "grey"});
+        var cellWidth = 100;
+        var cellHeight = 100;
+        var rowCellCount = mainRect.attrs.width / cellWidth ;
+        var colCellCount = mainRect.attrs.height/ cellHeight;
+        //for(var j=0; j<colCellCount; j++){
+            var heightMod = paper.height;
+                for(var i=0; i<rowCellCount; i++){
+                    var w = i*cellWidth;
+                    var cell=paper.rect(0+w,heightMod-cellHeight,cellHeight,cellWidth).attr({fill: "yellow"});//.light().shadow();
+                }
+            //heightMod -= 100;
+        //}
+        var myFilter = paper.createFilter();
+        myFilter.chainEffect("feTurbulence", {type: "turbulence", baseFrequency: "0.05", numOctaves: "2"});
+        myFilter.merge(myFilter.getLastResult(), "SourceGraphic");
+        myFilter.chainEffect("feGaussianBlur", {stdDeviation: 30});
+        myFilter.merge(myFilter.getLastResult());
+        myFilter.chainEffect("feSpotLight",{x:50,y:250,z:50})
+       // myFilter.chainEffect("feGaussianBlur", {stdDeviation:"5"});
+
+        var circle = paper.circle(100,300,50).attr({fill:"red"});//.emboss().blur().shadow();
+       // circle.filter(filter);
+        /*var circle1 = paper.circle(250,300,50).attr({fill:"red"});//.emboss().blur().shadow();
+        circle1.filter(filter);
+        var circle2 = paper.circle(400,300,50).attr({fill:"red"});//.emboss().blur().shadow();
+        circle2.filter(filter);*/
+        /*var circle3 = paper.circle(650,300,50).attr({fill:"red"});//.emboss().blur().shadow();
+        circle3.filter(filter);*/
+        //paper.forEach(function(el){console.log(el);
+            //if(el.type == "rect"){
+             //   el.blur();
+            //}
+
+        //});
+        //circle.light(25,275,10,"yellow","specular").blur(10);
+        circle.filter(myFilter);
+    </script>
+</body>
+</html>

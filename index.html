@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="lib/jquery-1.11.1.min.js"></script>
+    <script src="lib/raphael-min.js"></script>
+    <title>Treasure-hunt</title>
+</head>
+<body>
+<div id="paper1"></div>
+<script type="text/javascript">
+
+    var paper = Raphael("paper1", 500,500);
+    var mainRect = paper.rect(0,0,500,500).attr({fill: "grey"});
+    var cellWidth = 100;
+    var cellHeight = 100;
+    var rowCellCount = mainRect.attrs.width / cellWidth ;
+    var colCellCount = mainRect.attrs.height/ cellHeight;
+    for(var j=0; j<colCellCount; j++){
+        var heightMod = paper.height;
+       // setTimeout(function(){
+            for(var i=0; i<rowCellCount; i++){
+                /*var cell1 = drawLine(1101,i);
+                var cell2 = drawLine(1100,i);
+                var cell3 = drawLine(1100,i);
+                var cell4 = drawLine(0110,i);*/
+                var w = i*cellWidth;
+                //setTimeout(function(w){
+                    var cell=paper.rect(0+w,heightMod-cellHeight,cellHeight,cellWidth).attr({fill: "yellow"});
+                // },2000);
+                //paper.rect(0+w,heightMod-cellHeight,cellHeight,cellWidth).attr({fill: "yellow"});
+            }
+       // },2000);
+        heightMod -= 100;
+    }
+    //var cell = paper.rect(0,400,100,100).attr({fill: "yellow",opacity:0.9});
+    //var cell2 = paper.rect(100,400,100,100).attr({fill: "yellow",opacity:0.9});
+
+    function drawLine(a,rowNum){
+        var rowHeight = rowNum * cellHeight;
+        var numStr = a.toString();
+        console.log(numStr.length);
+        var x1,y1,x2,y2;
+        for(var i=0; i<numStr.length; i++){
+            if(i==0){
+                x1 = 0;
+                y1 = 400 - rowHeight;
+                x2 = 100;
+                y2 = 400 - rowHeight;
+            }
+            else if(i==1){
+                x1 = 100;
+                y1 = 500 - rowHeight;
+                x2 = 0;
+                y2 = 500 - rowHeight;
+            }
+            else if(i==2){
+                x1 = 100;
+                y1 = 400 - rowHeight;
+                x2 = 100;
+                y2 = 500 - rowHeight;
+            }
+            else if(i==3){
+                x1 = 0;
+                y1 = 500 - rowHeight;
+                x2 = 0;
+                y2 = 400 - rowHeight;
+            }
+            else{
+                x1=x2=y1=y2=0;
+            }
+            switch(numStr[i]){
+                case '1': paper.path(["M",x1,y1,"L",x2,y2]).attr({stroke:"blue","stroke-width" :"5"});
+                    break;
+                //case '0': illuminate();
+
+            }
+        }
+    }
+
+    paper.forEach(function(el){el.blur();});
+
+</script>
+<!--
+<svg height="300" width="500" >
+    <defs>
+        <filter id="f1" x="0" y="0">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+        </filter>
+    </defs>
+    <rect width="90" height="90" stroke="green" stroke-width="3"
+          fill="yellow" filter="url(#f1)" />
+    <defs>
+    <radialGradient id="grad1" cx="0%" cy="0%" r="50%" fx="50%" fy="50%">
+      <stop offset="50%" style="stop-color:rgb(255,255,255);
+      stop-opacity:0" />
+      <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+</svg>
+-->
+</body>
+</html>
