@@ -70,86 +70,92 @@
         switch (e.keyCode){
 
             case ARROW_KEY_LEFT:
-                var angle,xscale,yscale;
+                var angle;
                 switch(currentState){
-                    case RIGHT : break;
+                    case RIGHT : flip(-1, 1);break;//correct
                     case LEFT  : break;
-                    case UP    : angle = 0 ; break;
-                    case DOWN  : angle = 180; break;
+                    case UP    : angle = 270 ; rotateMe(angle); flip(1,-1); break;
+                    case DOWN  : angle = 90; rotateMe(angle); flip(1,-1); break;
 
                 }
                 if(currentState != LEFT){
                     currentState = LEFT;
-                    var s= car.getBBox();
-                    mat = mat.translate(s.x + s.width/2 ,s.y + s.height/2 );
-                    mat = mat.rotate(angle);
-                    mat.scaleX = -mat.scaleX
-                    mat = mat.translate(-(s.x + s.width/2 ),-(s.y + s.height/2));
-                    transform.setMatrix(mat);
-                    car.transform.baseVal.initialize(transform);
                 }
                 else{
-                    mat = mat.translate(5,0);
-                    transform.setMatrix(mat);
-                    car.transform.baseVal.initialize(transform);
+                    moveFront();
                 }
-                break;
                 break;
             case ARROW_KEY_UP:
                     var angle;
                     switch(currentState){
-                        case RIGHT : angle = 270; break;
-                        case LEFT  : angle = 90; break;
+                        case RIGHT : angle = 270; rotateMe(angle); break;
+                        case LEFT  : angle = 270; rotateMe(angle); break;
                         case UP    : break;
-                        case DOWN  : angle = 180; break;
+                        case DOWN  : flip(-1,1); break;
 
                     }
                     if(currentState != UP){
                         currentState = UP;
-                        var s= car.getBBox();
-                        mat = mat.translate(s.x + s.width/2 ,s.y + s.height/2 );
-                        mat = mat.rotate(angle);
-                        mat = mat.translate(-(s.x + s.width/2 ),-(s.y + s.height/2));
-                        transform.setMatrix(mat);
-                        car.transform.baseVal.initialize(transform);
                     }
                     else{
-                        mat = mat.translate(5,0);
-                        transform.setMatrix(mat);
-                        car.transform.baseVal.initialize(transform);
+                        moveFront();
                     }
                 break;
             case ARROW_KEY_RIGHT:
                     var angle;
                     switch(currentState){
                         case RIGHT : break;
-                        case LEFT  : angle = 180; break;
-                        case UP    : angle = 90; break;
-                        case DOWN  : angle = 90; break;
+                        case LEFT  : flip(-1,1); break;
+                        case UP    : angle = 90; rotateMe(angle); break;
+                        case DOWN  : angle = 270; rotateMe(angle);  break;
                     }
                     if(currentState != RIGHT){
                         currentState = RIGHT;
-                        var s= car.getBBox();
-                        mat = mat.translate(s.x + s.width/2 ,s.y + s.height/2 );
-                        mat = mat.rotate(angle);
-                        mat = mat.translate(-(s.x + s.width/2 ),-(s.y + s.height/2));
-                        transform.setMatrix(mat);
-                        car.transform.baseVal.initialize(transform);
                     }
                     else{
-                        mat = mat.translate(5,0);
-                        transform.setMatrix(mat);
-                        car.transform.baseVal.initialize(transform);
+                        moveFront();
                     }
                 break;
             case ARROW_KEY_DOWN:
-                    mat = mat.rotate(-90);
-                    transform.setMatrix(mat);
-                    car.transform.baseVal.initialize(transform);
+                var angle;
+                switch(currentState){
+                    case RIGHT : angle = -270; rotateMe(angle);break;
+                    case LEFT  : angle = 90; rotateMe(angle);break;
+                    case UP    : flip(-1,-1); break;
+                    case DOWN  : break;
+                }
+                if(currentState != DOWN){
+                    currentState = DOWN;
+                }
+                else{
+                    moveFront();
+                }
                 break;
-
+        }
+        function flip(x,y){
+            var s= car.getBBox();
+            mat = mat.translate(s.x + s.width/2 ,s.y + s.height/2 );
+            mat= mat.scaleNonUniform(x, y);
+            mat = mat.translate(-(s.x + s.width/2 ),-(s.y + s.height/2));
+            transform.setMatrix(mat);
+            car.transform.baseVal.initialize(transform);
+            return;
+        }
+        function rotateMe(angle){
+            var s= car.getBBox();
+            mat = mat.translate(s.x + s.width/2 ,s.y + s.height/2 );
+            mat = mat.rotate(angle);
+            mat = mat.translate(-(s.x + s.width/2 ),-(s.y + s.height/2));
+            transform.setMatrix(mat);
+            car.transform.baseVal.initialize(transform);
+        }
+        function moveFront(){
+            mat = mat.translate(5,0);
+            transform.setMatrix(mat);
+            car.transform.baseVal.initialize(transform);
         }
     }
+
 
 
 </script>
