@@ -107,7 +107,7 @@
                         case RIGHT : break;
                         case LEFT  : flip(-1,1); break;
                         case UP    : angle = 90; rotateMe(angle); break;
-                        case DOWN  : angle = 270; rotateMe(angle);  break;
+                        case DOWN  : angle = 270; rotateMe(angle); flip(-1,1);  break;
                     }
                     if(currentState != RIGHT){
                         currentState = RIGHT;
